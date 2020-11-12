@@ -13,7 +13,6 @@
  *      すでに./destディレクトリが存在する場合はエラーになる
  */
 
-const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
 const fs = require('fs');
 const SRC_DIR_PATH = './src/';
