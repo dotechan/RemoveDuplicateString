@@ -10,7 +10,6 @@
  *      ./src/values-xxx/配下のstring-xxx.xmlファイルの中身を検証する
  *      attribute valueが重複しているelementが存在する場合は1つ目以降のelementを削除する
  *      加工したxmlファイルは./destディレクトリに出力される
- *      すでに./destディレクトリが存在する場合はエラーになる
  */
 
 const dom = require("xmldom").DOMParser;
@@ -19,14 +18,16 @@ const util = require("util");
 const SRC_DIR_PATH = "./src/";
 const DEST_DIR_PATH = "./dest/";
 
-// 加工後のxmlファイルを生成して格納するディレクトリを生成する
 const mkdir = util.promisify(fs.mkdir);
+
+// 加工後のxmlファイルを生成して格納するディレクトリを生成する
 mkdir(DEST_DIR_PATH)
   .then(() => {
-    console.log("Suceeded in creating a directory for output.");
+    console.log(`Suceeded in creating a ${DEST_DIR_PATH} directory.`);
   })
-  .catch(() => {
-    console.log("Failed to create directory for output.");
+  .catch((reason) => {
+    console.log(`Failed to creat a ${DEST_DIR_PATH} directory.`);
+    console.log(`${reason}`);
   });
 
 fs.readdirSync(SRC_DIR_PATH).forEach((valuesDir) => {
@@ -62,7 +63,14 @@ fs.readdirSync(SRC_DIR_PATH).forEach((valuesDir) => {
     const XMLSerializer = require("xmldom").XMLSerializer;
     const xmlStr = new XMLSerializer().serializeToString(document);
     const DEST_XML_FILE_PATH = DEST_DIR_PATH + valuesDir + "/";
-    fs.mkdirSync(DEST_XML_FILE_PATH);
+    mkdir(DEST_XML_FILE_PATH)
+      .then(() => {
+        console.log(`Suceeded in creating a ${DEST_XML_FILE_PATH} directory.`);
+      })
+      .catch((reason) => {
+        console.log(`Failed to creat a ${DEST_XML_FILE_PATH} directory.`);
+        console.log(`${reason}`);
+      });
     fs.writeFileSync(DEST_XML_FILE_PATH + fileName, xmlStr, {
       encoding: "utf8",
       mode: 0o666,
