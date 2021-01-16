@@ -18,8 +18,25 @@ const fs = require("fs");
 const SRC_DIR_PATH = "./src/";
 const DEST_DIR_PATH = "./dest/";
 
-// 加工後のxmlファイルを生成して格納するディレクトリを生成する
-fs.mkdirSync(DEST_DIR_PATH);
+/**
+ * 加工後のxmlファイルを生成して格納するディレクトリを生成する
+ */
+function mkdirDestDir() {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(DEST_DIR_PATH, (err) => {
+      if (err) reject("reject");
+      resolve("resolve");
+    });
+  });
+}
+
+mkdirDestDir()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((result) => {
+    console.log(result);
+  });
 
 fs.readdirSync(SRC_DIR_PATH).forEach((valuesDir) => {
   fs.readdirSync(SRC_DIR_PATH + valuesDir).forEach((fileName) => {
