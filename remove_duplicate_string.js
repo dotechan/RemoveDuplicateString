@@ -15,27 +15,18 @@
 
 const dom = require("xmldom").DOMParser;
 const fs = require("fs");
+const util = require("util");
 const SRC_DIR_PATH = "./src/";
 const DEST_DIR_PATH = "./dest/";
 
-/**
- * 加工後のxmlファイルを生成して格納するディレクトリを生成する
- */
-function mkdirDestDir() {
-  return new Promise((resolve, reject) => {
-    fs.mkdir(DEST_DIR_PATH, (err) => {
-      if (err) reject("reject");
-      resolve("resolve");
-    });
-  });
-}
-
-mkdirDestDir()
-  .then((result) => {
-    console.log(result);
+// 加工後のxmlファイルを生成して格納するディレクトリを生成する
+const mkdir = util.promisify(fs.mkdir);
+mkdir(DEST_DIR_PATH)
+  .then(() => {
+    console.log("Suceeded in creating a directory for output.");
   })
-  .catch((result) => {
-    console.log(result);
+  .catch(() => {
+    console.log("Failed to create directory for output.");
   });
 
 fs.readdirSync(SRC_DIR_PATH).forEach((valuesDir) => {
