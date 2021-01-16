@@ -3,11 +3,11 @@
  *      node remove_duplicate_string.js
  *
  * Overview:
- *      Androidのstring.xmlから重複定義されている用語を削除する
+ *      Androidのstrings.xmlから重複定義されている用語を削除する
  *
  * Description:
  *      ./srcディレクトリ配下に各言語のvalues-xxxファイルを配置する
- *      ./src/values-xxx/配下のstring-xxx.xmlファイルの中身を検証する
+ *      ./src/values-xxx/配下のstrings.xmlファイルの中身を検証する
  *      attribute valueが重複しているelementが存在する場合は1つ目以降のelementを削除する
  *      加工したxmlファイルは./destディレクトリに出力される
  *      destディレクトリが既に存在する場合はエラーとする
