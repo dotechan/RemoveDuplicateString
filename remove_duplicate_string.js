@@ -33,11 +33,11 @@ fs.readdirSync(SRC_DIR_PATH).forEach(valuesDir => {
         // 静的(DOM内の変更がコレクションの内容に影響を与えない場合)の二種類がある
         // getElementsByTagNameはライブであるNodeListを返す
         const nodeList = document.getElementsByTagName('string');
-        var preAttributeValue = "";
+        let preAttributeValue = "";
         // XML内のAttributeNodeのValueが重複しているElementを最初のElement以外削除する
-        // 前提条件:XML内のElementはAttributeNodeのValueでソートされている
+        // 前提条件:XML内のElementはname属性の値でソートされている
         Array.from(nodeList).forEach(node => {
-            const attributeValue = node.attributes.item(0).nodeValue;
+            const attributeValue = node.getAttribute('name').nodeValue;
             if (attributeValue == preAttributeValue) {
                 const oldChild = node.parentNode.removeChild(node);
                 console.log(`remove element, elementNodeName = ${oldChild.nodeName}, attributeNodeValue = ${attributeValue}, textNodeValue = ${oldChild.firstChild.nodeValue}`);
